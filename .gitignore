@@ -48,3 +48,7 @@ Thumbs.db
 *.mov
 *.wmv
 
+package-lock.json
+__pycache__
+bin
+obj
