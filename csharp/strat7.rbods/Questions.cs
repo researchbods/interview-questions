@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace strat7.rbods {
     public class Questions {
+
+        private static readonly object _lock = new object();
+
         /// <summary>
         /// Given an enumerable of strings, attempt to parse each string and if
         /// it is an integer, add it to the returned enumerable.
@@ -22,7 +26,11 @@ namespace strat7.rbods {
         /// <param name="source">An enumerable containing words</param>
         /// <returns></returns>
         public IEnumerable<int> ExtractNumbers(IEnumerable<string> source) {
-            throw new NotImplementedException();
+            int converted = 0;
+            return from s in source
+                           let canConvert = int.TryParse(s, out converted)
+                           where canConvert
+                           select converted;
         }
 
         /// <summary>
@@ -67,7 +75,7 @@ namespace strat7.rbods {
         /// <param name="second">Second list of words</param>
         /// <returns></returns>
         public string LongestCommonWord(IEnumerable<string> first, IEnumerable<string> second) {
-            throw new NotImplementedException();
+            return first.Where(f => second.Contains(f)).OrderByDescending(f => f.Length).FirstOrDefault();
         }
 
         /// <summary>
@@ -83,7 +91,11 @@ namespace strat7.rbods {
         /// <param name="km">distance in kilometers</param>
         /// <returns></returns>
         public double DistanceInMiles(double km) {
-            throw new NotImplementedException();
+            if(km < 0)
+            {
+                throw new ArgumentException("distance cannot be negative");
+            }
+            return km / 1.6;
         }
 
         /// <summary>
@@ -99,7 +111,11 @@ namespace strat7.rbods {
         /// <param name="miles">distance in miles</param>
         /// <returns></returns>
         public double DistanceInKm(double miles) {
-            throw new NotImplementedException();
+            if (miles < 0)
+            {
+                throw new ArgumentException("distance cannot be negative");
+            }
+            return miles * 1.6;
         }
 
         /// <summary>
@@ -121,12 +137,15 @@ namespace strat7.rbods {
         /// <param name="word">The word to check</param>
         /// <returns></returns>
         public bool IsPalindrome(string word) {
-            throw new NotImplementedException();
+            var lowered = word.ToLower();
+            char[] reversed = lowered.ToCharArray().Reverse().ToArray();
+            return new string(reversed) == lowered;
         }
 
         /// <summary>
         /// Write a method that takes an enumerable list of objects and shuffles
-        /// them into a different order.
+        /// them into a different order. 
+        /// The order is guaranteed not to be the same unless the length of the list prevents that
         ///
         /// For example:
         ///
@@ -142,7 +161,21 @@ namespace strat7.rbods {
         /// <param name="source"></param>
         /// <returns></returns>
         public IEnumerable<object> Shuffle(IEnumerable<object> source) {
-            throw new NotImplementedException();
+            if(source.Count() <= 1)
+            {
+                return source;
+            }
+
+            var rand = new Random();
+            IEnumerable<object> newOrder = new List<object>();
+            bool isSameOrder = true;
+            while (isSameOrder)
+            {
+                newOrder = source.OrderBy(s => rand.Next());
+                isSameOrder = newOrder == source;
+            }
+
+            return newOrder;
         }
 
         /// <summary>
@@ -155,6 +188,7 @@ namespace strat7.rbods {
         /// <returns></returns>
         public int[] Sort(int[] source) {
             throw new NotImplementedException();
+           
         }
 
         /// <summary>
@@ -168,7 +202,20 @@ namespace strat7.rbods {
         /// </summary>
         /// <returns></returns>
         public int FibonacciSum() {
-            throw new NotImplementedException();
+            int total = 2;
+            int previous = 1;
+            int current = 2;
+
+            while (current < 4000000){
+                int newCurrent = current + previous;
+                if(newCurrent % 2 == 0)
+                {
+                    total += newCurrent;
+                }
+                previous = current;
+                current = newCurrent;
+            }
+            return total;
         }
 
         /// <summary>
@@ -186,14 +233,19 @@ namespace strat7.rbods {
                 threads[i] = new Thread(() => {
                     var complete = false;
                     while (!complete) {
-                        var next = ret.Count + 1;
-                        Thread.Sleep(new Random().Next(1, 10));
-                        if (next <= 100) {
-                            ret.Add(next);
-                        }
+                        lock (_lock)
+                        {
+                            var next = ret.Count + 1;
+                            Thread.Sleep(new Random().Next(1, 10));
+                            if (next <= 100)
+                            {
+                                ret.Add(next);
+                            }
 
-                        if (ret.Count >= 100) {
-                            complete = true;
+                            if (ret.Count >= 100)
+                            {
+                                complete = true;
+                            }
                         }
                     }
                 });

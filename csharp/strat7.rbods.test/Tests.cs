@@ -85,10 +85,10 @@ namespace strat7.rbods.test
         [Test]
         public void IsPalindrome() {
             var palindromes = new List<string> {
-
+                "ANNNA", "Anna", "anna"
             };
             var invalid = new List<string> {
-
+                "test", "Test"
             };
 
             foreach (var word in palindromes) {
@@ -107,7 +107,7 @@ namespace strat7.rbods.test
 
         [Test]
         public void CanSort() {
-            throw new NotImplementedException();
+            Assert.AreEqual(new int[] { 1, 2, 3, 4, 4, 5 }, instance.Sort(new int[] { 3, 4, 1, 4, 5, 2 }));
         }
 
         [Test]
