@@ -107,7 +107,7 @@ namespace strat7.rbods.test
 
         [Test]
         public void CanSort() {
-            throw new NotImplementedException();
+            Assert.AreEqual(new int[] { 1, 2, 3, 4, 5 }, instance.Sort(new int[] { 2, 5, 3, 1, 4 }));
         }
 
         [Test]

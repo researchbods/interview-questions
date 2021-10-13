@@ -13,7 +13,12 @@
 # ]
 #
 def extract_numbers(source):
-	raise Exception('Not implemented')
+	extracted_numbers = []
+	for txt in source:
+		if txt.isnumeric():
+			extracted_numbers.append(int(txt))
+	return extracted_numbers
+
 
 # Given two enumerables of strings, find the longest common word.
 #
@@ -52,7 +57,15 @@ def extract_numbers(source):
 #
 # ; would return "wandering" as the longest common word.
 def longest_common_word(first, second):
-	raise Exception('Not implemented')
+	longest_common = ""
+	first.sort(key=len)
+	second.sort(key=len)
+	for word in first:
+		for second_word in second:
+			if word == second_word and len(word) > len(longest_common):
+				longest_common = word
+	return longest_common
+
 
 # Write a function that converts kilometers to miles, given that there are
 # 1.6 kilometers per mile.
@@ -63,7 +76,8 @@ def longest_common_word(first, second):
 #
 # ; would return 10;
 def distance_in_miles(kilometers):
-	raise Exception('Not implemented')
+	return kilometers / 1.6
+
 
 # Write a function that converts miles to kilometers, give that there are
 # 1.6 kilometers per mile.
@@ -74,7 +88,8 @@ def distance_in_miles(kilometers):
 #
 # ; would return 16;
 def distance_in_km(miles):
-	raise Exception('Not implemented')
+	return miles * 1.6
+
 
 # Write a function that returns true if the word is a palindrome, false if
 # it is not.
@@ -91,4 +106,5 @@ def distance_in_km(miles):
 #
 # Also complete the related test case for this method.
 def isPalindrome(word):
-	raise Exception('Not implemented')
+	backwards_text = word[::-1]
+	return word.lower() == backwards_text.lower()

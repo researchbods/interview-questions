@@ -52,3 +52,4 @@ package-lock.json
 __pycache__
 bin
 obj
+/csharp/.vs/csharp

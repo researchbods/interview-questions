@@ -13,7 +13,15 @@
 /// ]
 ///
 const extractNumbers = (source) => {
-	throw new Error("Not implemented");
+	let numberList = [];
+	for (let index = 0; index < source.length; index++) {
+		var item = source[index];
+		if(!isNaN(item)) {
+			numberList.push(parseFloat(item)); // This was originally parseInt since the comment above asks for an integer, yet one of the tests wants a decimal      --Aidan
+		}
+	}
+	
+	return numberList;
 };
 
 /// Given two enumerables of strings, find the longest common word.
@@ -53,7 +61,17 @@ const extractNumbers = (source) => {
 ///
 /// ; would return "wandering" as the longest common word.
 const longestCommonWord = (first, second) => {
-	throw new Error("Not implemented");
+	let longest_common = "";
+
+	for(let i = 0; i < first.length; i++) {
+		for(let j = 0; j < second.length; j++) {
+			if(first[i] === second[j] && second[j].length > longest_common.length) {
+				longest_common = second[j];
+			}
+		}
+	}
+
+	return longest_common;
 };
 
 /// Write a method that converts kilometers to miles, given that there are
@@ -65,7 +83,7 @@ const longestCommonWord = (first, second) => {
 ///
 /// ; would return 10;
 const distanceInMiles = (kilometers) => {
-	throw new Error("Not implemented");
+	return kilometers / 1.6;
 };
 
 /// Write a method that converts miles to kilometers, give that there are
@@ -77,7 +95,7 @@ const distanceInMiles = (kilometers) => {
 ///
 /// ; would return 16;
 const distanceInKm = (miles) => {
-	throw new Error("Not implemented");
+	return miles * 1.6;
 };
 
 /// Write a method that returns true if the word is a palindrome, false if
@@ -95,7 +113,8 @@ const distanceInKm = (miles) => {
 ///
 /// Also complete the related test case for this method.
 const isPalindrome = (word) => {
-	throw new Error("Not implemented");
+	var reverse = word.toLowerCase().split('').reverse().join('');
+	return reverse === word.toLowerCase();
 };
 
 /// Generate a list of integers from 1 to 100.
@@ -105,7 +124,7 @@ const isPalindrome = (word) => {
 const generateList = () => {
 	var list = new Array();
 	var funcs  = new Array();
-	for (var i = 1; i <= 100; i++) {
+	for (let i = 1; i <= 100; i++) {
 		funcs.push(function(){
 			list.push(i);
 		});
