@@ -85,10 +85,10 @@ namespace strat7.rbods.test
         [Test]
         public void IsPalindrome() {
             var palindromes = new List<string> {
-
+                "Anna", "civic", "radar"
             };
             var invalid = new List<string> {
-
+                "invalid", "work", "settings"
             };
 
             foreach (var word in palindromes) {

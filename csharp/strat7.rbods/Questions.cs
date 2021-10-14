@@ -127,7 +127,7 @@ namespace strat7.rbods {
         /// <returns></returns>
         public bool IsPalindrome(string word)
         {
-            return word.Equals(word.Reverse().ToString(), StringComparison.InvariantCultureIgnoreCase);
+            return word.Equals(new string(word.Reverse().ToArray()), StringComparison.InvariantCultureIgnoreCase);
         }
 
         /// <summary>
