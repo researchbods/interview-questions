@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace strat7.rbods {
@@ -21,8 +22,9 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="source">An enumerable containing words</param>
         /// <returns></returns>
-        public IEnumerable<int> ExtractNumbers(IEnumerable<string> source) {
-            throw new NotImplementedException();
+        public IEnumerable<int> ExtractNumbers(IEnumerable<string> source)
+        {
+            return source.Where(x => int.TryParse(x, out _)).Select(int.Parse);
         }
 
         /// <summary>
@@ -66,8 +68,9 @@ namespace strat7.rbods {
         /// <param name="first">First list of words</param>
         /// <param name="second">Second list of words</param>
         /// <returns></returns>
-        public string LongestCommonWord(IEnumerable<string> first, IEnumerable<string> second) {
-            throw new NotImplementedException();
+        public string LongestCommonWord(IEnumerable<string> first, IEnumerable<string> second)
+        {
+            return first.Intersect(second).OrderByDescending(x => x.Length).FirstOrDefault() ?? string.Empty;
         }
 
         /// <summary>
@@ -82,8 +85,9 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="km">distance in kilometers</param>
         /// <returns></returns>
-        public double DistanceInMiles(double km) {
-            throw new NotImplementedException();
+        public double DistanceInMiles(double km)
+        {
+            return km / 1.6;
         }
 
         /// <summary>
@@ -98,8 +102,9 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="miles">distance in miles</param>
         /// <returns></returns>
-        public double DistanceInKm(double miles) {
-            throw new NotImplementedException();
+        public double DistanceInKm(double miles)
+        {
+            return miles * 1.6;
         }
 
         /// <summary>
@@ -120,8 +125,9 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="word">The word to check</param>
         /// <returns></returns>
-        public bool IsPalindrome(string word) {
-            throw new NotImplementedException();
+        public bool IsPalindrome(string word)
+        {
+            return word.Equals(word.Reverse().ToString(), StringComparison.InvariantCultureIgnoreCase);
         }
 
         /// <summary>
@@ -141,8 +147,16 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public IEnumerable<object> Shuffle(IEnumerable<object> source) {
-            throw new NotImplementedException();
+        public IEnumerable<object> Shuffle(IEnumerable<object> source)
+        {
+            var rnd = new Random();
+            IEnumerable<object> result;
+            do
+            {
+                result = source.OrderBy(x => rnd.Next()).ToArray();
+            } while (source.SequenceEqual(result));
+
+            return result;
         }
 
         /// <summary>
@@ -153,8 +167,42 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public int[] Sort(int[] source) {
-            throw new NotImplementedException();
+        public int[] Sort(int[] source)
+        {
+            var result = source.ToArray();
+            QuickSort(result, 0, result.Length - 1);
+            return result;
+        }
+
+        private void QuickSort(int[] arr, int start, int end)
+        {
+            if (start < end)
+            {
+                var pivot = Partition(arr, start, end);
+                QuickSort(arr, start, pivot - 1);
+                QuickSort(arr, pivot + 1, end);
+            }
+        }
+
+        private int Partition(int[] arr, int start, int end)
+        {
+            int temp;
+            var pivot = arr[end];
+            var lowIndex = start - 1;
+
+            for (var i = start; i <= end - 1; i++)
+            {
+                if (arr[i] > pivot) continue;
+                lowIndex++;
+                temp = arr[lowIndex];
+                arr[lowIndex] = arr[i];
+                arr[i] = temp;
+            }
+
+            temp = arr[lowIndex + 1];
+            arr[lowIndex + 1] = arr[end];
+            arr[end] = temp;
+            return lowIndex + 1;
         }
 
         /// <summary>
@@ -167,8 +215,15 @@ namespace strat7.rbods {
         /// not exceed four million, find the sum of the even-valued terms.
         /// </summary>
         /// <returns></returns>
-        public int FibonacciSum() {
-            throw new NotImplementedException();
+        public int FibonacciSum()
+        {
+            var sequence = new List<int>() {1, 2};
+            while (sequence.TakeLast(2).Sum() < 4000000)
+            {
+                sequence.Add(sequence.TakeLast(2).Sum());
+            }
+
+            return sequence.Where(x => x % 2 == 0).Sum();
         }
 
         /// <summary>
@@ -185,14 +240,20 @@ namespace strat7.rbods {
             for (var i = 0; i < numThreads; i++) {
                 threads[i] = new Thread(() => {
                     var complete = false;
-                    while (!complete) {
-                        var next = ret.Count + 1;
-                        Thread.Sleep(new Random().Next(1, 10));
-                        if (next <= 100) {
-                            ret.Add(next);
+                    while (!complete)
+                    {
+                        lock (ret)
+                        {
+                            var next = ret.Count + 1;
+                            Thread.Sleep(new Random().Next(1, 10));
+                            if (next <= 100)
+                            {
+                                ret.Add(next);
+                            }
                         }
 
-                        if (ret.Count >= 100) {
+                        if (ret.Count >= 100)
+                        {
                             complete = true;
                         }
                     }

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using NUnit.Framework;
 
 using strat7.rbods;
@@ -107,7 +107,13 @@ namespace strat7.rbods.test
 
         [Test]
         public void CanSort() {
-            throw new NotImplementedException();
+            var randNum = new Random();
+            var source = Enumerable
+                .Repeat(0, 1000)
+                .Select(i => randNum.Next(-1000, 1000))
+                .ToArray();
+
+            CollectionAssert.AreEqual(source.OrderBy(x => x), instance.Sort(source));
         }
 
         [Test]
