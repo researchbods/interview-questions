@@ -2,9 +2,12 @@
   "name": "practical",
   "version": "0.0.1",
   "dependencies": {
-    "jasmine": "^3.3.1"
+    "jasmine-node": "^3.0.0"
   },
   "scripts": {
     "test": "node ./node_modules/jasmine/bin/jasmine spec.js"
+  },
+  "devDependencies": {
+    "jasmine": "^3.10.0"
   }
 }
