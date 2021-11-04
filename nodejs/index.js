@@ -13,7 +13,15 @@
 /// ]
 ///
 const extractNumbers = (source) => {
-	throw new Error("Not implemented");
+	var result = [];
+	source.forEach(item => {
+		if (!isNaN(Number(item)))
+		{
+			result.push(Number(item));
+		}
+	});
+
+	return result;
 };
 
 /// Given two enumerables of strings, find the longest common word.
@@ -53,7 +61,18 @@ const extractNumbers = (source) => {
 ///
 /// ; would return "wandering" as the longest common word.
 const longestCommonWord = (first, second) => {
-	throw new Error("Not implemented");
+	var commonWordlist = first.filter(value => second.includes(value));
+	var longestIndex =0;
+	for(var i = 0; i < commonWordlist.length; i++){
+		if (commonWordlist[i].length > commonWordlist[longestIndex].length)
+		{
+			longestIndex = i;
+		}
+	}
+
+	var longestCommonWord = commonWordlist[longestIndex];
+
+	return longestCommonWord;
 };
 
 /// Write a method that converts kilometers to miles, given that there are
@@ -65,7 +84,8 @@ const longestCommonWord = (first, second) => {
 ///
 /// ; would return 10;
 const distanceInMiles = (kilometers) => {
-	throw new Error("Not implemented");
+	var miles = kilometers / 1.6;
+	return miles;
 };
 
 /// Write a method that converts miles to kilometers, give that there are
@@ -77,7 +97,8 @@ const distanceInMiles = (kilometers) => {
 ///
 /// ; would return 16;
 const distanceInKm = (miles) => {
-	throw new Error("Not implemented");
+	var kilometers = miles * 1.6;
+	return kilometers;
 };
 
 /// Write a method that returns true if the word is a palindrome, false if
@@ -95,7 +116,10 @@ const distanceInKm = (miles) => {
 ///
 /// Also complete the related test case for this method.
 const isPalindrome = (word) => {
-	throw new Error("Not implemented");
+	var lowerCaseWord = word.toLowerCase();
+	var reverse = lowerCaseWord.split("").reverse().join("");
+
+	return lowerCaseWord == reverse;
 };
 
 /// Generate a list of integers from 1 to 100.
@@ -106,9 +130,9 @@ const generateList = () => {
 	var list = new Array();
 	var funcs  = new Array();
 	for (var i = 1; i <= 100; i++) {
-		funcs.push(function(){
+		funcs.push(function func() { return function(){			
 			list.push(i);
-		});
+		}});
 	};
 	funcs.map((f) => f());
 	return list;

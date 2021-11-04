@@ -61,8 +61,36 @@ describe("A set of functions", () => {
 	});
 
 	it("can correctly detect palindromes", () => {
-		let palindromes = [];
-		let invalid = [];
+		let palindromes = [
+			'Anna', 
+			'Hannah',
+			'testset',
+			'stats',
+			'level',
+			'radar',
+			'rotor',
+			'aibohphobia',
+			'deified',
+			'minim',
+			'lemel',
+			'solos',
+			'kayak'
+		];
+		let invalid = [
+			'Palindrome',
+			'wacky',
+			'fabulous',
+			'arm',
+			'rabbit',
+			'force',
+			'wandering',
+			'scissors',
+			'fair',
+			'homely',
+			'wiggly',
+			'thankful',
+			'ear'
+		 ];
 
 		palindromes.forEach((p) => {
 			expect(instance.isPalindrome(p)).toEqual(true);

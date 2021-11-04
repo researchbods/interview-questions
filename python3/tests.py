@@ -38,7 +38,7 @@ class UnitTests(unittest.TestCase):
 	         	'thankful',
 	         	'ear'
 	     	]
-		);
+		)
 
 		self.assertEqual('wandering', result)
 
@@ -49,8 +49,36 @@ class UnitTests(unittest.TestCase):
 		self.assertEqual(questions.distance_in_km(10), 16)
 
 	def test_can_determine_palindromes(self):
-		palindromes = [];
-		invalid = [];
+		palindromes = [
+					'Anna', 
+					'Hannah',
+					'testset',
+					'stats',
+					'level',
+					'radar',
+					'rotor',
+					'aibohphobia',
+					'deified',
+					'minim',
+					'lemel',
+					'solos',
+					'kayak'
+				]
+		invalid = [
+					'Palindrome',
+					'wacky',
+					'fabulous',
+					'arm',
+					'rabbit',
+					'force',
+					'wandering',
+					'scissors',
+					'fair',
+					'homely',
+					'wiggly',
+					'thankful',
+					'ear'
+				 ]
 
 		for p in palindromes:
 			self.assertEqual(True, questions.isPalindrome(p))
