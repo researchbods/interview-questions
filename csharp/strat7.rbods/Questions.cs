@@ -4,7 +4,10 @@ using System.Linq;
 using System.Threading;
 
 namespace strat7.rbods {
-    public class Questions {
+    public class Questions
+    {
+        private const double KilometersPerMile = 1.6d;
+
         /// <summary>
         /// Given an enumerable of strings, attempt to parse each string and if
         /// it is an integer, add it to the returned enumerable.
@@ -93,8 +96,9 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="km">distance in kilometers</param>
         /// <returns></returns>
-        public double DistanceInMiles(double km) {
-            throw new NotImplementedException();
+        public double DistanceInMiles(double km)
+        {
+            return km / KilometersPerMile;
         }
 
         /// <summary>

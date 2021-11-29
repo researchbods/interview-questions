@@ -104,9 +104,9 @@ namespace strat7.rbods.test
         }
 
         [Test]
-        [Ignore("NotImplemented")]
         public void CanGetDistanceInMiles() {
             Assert.AreEqual(10.00, instance.DistanceInMiles(16.00));
+            Assert.AreEqual(15.625d, instance.DistanceInMiles(25.00));
         }
 
         [Test]
