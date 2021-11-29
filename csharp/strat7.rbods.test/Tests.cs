@@ -39,12 +39,42 @@ namespace strat7.rbods.test
         }
 
         [Test]
-        [Ignore("WIP")]
         public void CanGetLongestCommonWord() {
             Assert.AreEqual("wandering", instance.LongestCommonWord(
                 new List<string> {
                     "love",
                     "wandering",
+                    "goofy",
+                    "sweet",
+                    "mean",
+                    "show",
+                    "fade",
+                    "scissors",
+                    "shoes",
+                    "gainful",
+                    "wind",
+                    "warn"
+                },
+                new List<string> {
+                    "wacky",
+                    "fabulous",
+                    "arm",
+                    "rabbit",
+                    "force",
+                    "wandering",
+                    "scissors",
+                    "fair",
+                    "homely",
+                    "wiggly",
+                    "thankful",
+                    "ear"
+                })
+            );
+            
+            Assert.AreEqual("scissors", instance.LongestCommonWord(
+                new List<string> {
+                    "love",
+                    "wandering1",
                     "goofy",
                     "sweet",
                     "mean",
