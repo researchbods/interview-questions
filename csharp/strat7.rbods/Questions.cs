@@ -22,7 +22,16 @@ namespace strat7.rbods {
         /// <param name="source">An enumerable containing words</param>
         /// <returns></returns>
         public IEnumerable<int> ExtractNumbers(IEnumerable<string> source) {
-            throw new NotImplementedException();
+            var listOfNumbers = new List<int>();
+            foreach (var stringValue in source)
+            {
+                if (int.TryParse(stringValue, out var numberResult))
+                {
+                    listOfNumbers.Add(numberResult);
+                }
+            }
+
+            return listOfNumbers;
         }
 
         /// <summary>

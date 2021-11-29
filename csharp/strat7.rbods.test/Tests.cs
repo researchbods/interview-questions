@@ -39,6 +39,7 @@ namespace strat7.rbods.test
         }
 
         [Test]
+        [Ignore("WIP")]
         public void CanGetLongestCommonWord() {
             Assert.AreEqual("wandering", instance.LongestCommonWord(
                 new List<string> {
@@ -73,16 +74,19 @@ namespace strat7.rbods.test
         }
 
         [Test]
+        [Ignore("NotImplemented")]
         public void CanGetDistanceInMiles() {
             Assert.AreEqual(10.00, instance.DistanceInMiles(16.00));
         }
 
         [Test]
+        [Ignore("NotImplemented")]
         public void CanGetDistanceInKilometers() {
             Assert.AreEqual(16.00, instance.DistanceInKm(10.00));
         }
 
         [Test]
+        [Ignore("NotImplemented")]
         public void IsPalindrome() {
             var palindromes = new List<string> {
 
@@ -101,21 +105,25 @@ namespace strat7.rbods.test
         }
 
         [Test]
+        [Ignore("NotImplemented")]
         public void CanShuffle() {
             Assert.AreEqual(new List<string> { "two", "one" }, instance.Shuffle(new List<string> { "one", "two" }));
         }
 
         [Test]
+        [Ignore("NotImplemented")]
         public void CanSort() {
             throw new NotImplementedException();
         }
 
         [Test]
+        [Ignore("NotImplemented")]
         public void CanSumFibonacciNumbers() {
             Assert.AreEqual(4613732, instance.FibonacciSum());
         }
 
         [Test]
+        [Ignore("NotImplemented")]
         public void CanGenerateListOfNumbers() {
             var list = instance.GenerateList();
 
