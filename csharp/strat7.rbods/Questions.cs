@@ -114,7 +114,7 @@ namespace strat7.rbods {
         /// <param name="miles">distance in miles</param>
         /// <returns></returns>
         public double DistanceInKm(double miles) {
-            throw new NotImplementedException();
+            return miles * KilometersPerMile;
         }
 
         /// <summary>
