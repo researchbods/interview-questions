@@ -145,7 +145,6 @@ namespace strat7.rbods.test
         }
 
         [Test]
-        [Ignore("NotImplemented")]
         public void CanSumFibonacciNumbers() {
             Assert.AreEqual(4613732, instance.FibonacciSum());
         }

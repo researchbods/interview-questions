@@ -242,7 +242,14 @@ namespace strat7.rbods
         /// <returns></returns>
         public int FibonacciSum()
         {
-            throw new NotImplementedException();
+            var fibonacciSeries = new List<int>(){ 1, 2 };
+            while (fibonacciSeries.LastOrDefault() < 4000000)
+            {
+                var currentCount = fibonacciSeries.Count();
+                fibonacciSeries.Add(fibonacciSeries.ElementAt(currentCount - 2) + fibonacciSeries.ElementAt(currentCount - 1));
+            }
+
+            return fibonacciSeries.Where(x => x % 2 == 0).Sum();
         }
 
         /// <summary>
