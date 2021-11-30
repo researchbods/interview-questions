@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace strat7.rbods {
+namespace strat7.rbods
+{
     public class Questions
     {
         private const double KilometersPerMile = 1.6d;
@@ -25,7 +26,8 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="source">An enumerable containing words</param>
         /// <returns></returns>
-        public IEnumerable<int> ExtractNumbers(IEnumerable<string> source) {
+        public IEnumerable<int> ExtractNumbers(IEnumerable<string> source)
+        {
             var listOfNumbers = new List<int>();
             foreach (var stringValue in source)
             {
@@ -113,7 +115,8 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="miles">distance in miles</param>
         /// <returns></returns>
-        public double DistanceInKm(double miles) {
+        public double DistanceInKm(double miles)
+        {
             return miles * KilometersPerMile;
         }
 
@@ -160,8 +163,46 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public IEnumerable<object> Shuffle(IEnumerable<object> source) {
-            throw new NotImplementedException();
+        public IEnumerable<object> Shuffle(IEnumerable<object> source)
+        {
+            var arrayShuffled = false;
+            object[] sourceArray;
+
+            do{
+                sourceArray = source.ToArray();
+                var random = new Random();
+                for (var i = sourceArray.Length - 1; i > 0; i--)
+                {
+                    var randomIndex = random.Next(i + 1);
+                    var tempValue = sourceArray[i];
+                    sourceArray[i] = sourceArray[randomIndex];
+                    sourceArray[randomIndex] = tempValue;
+                }
+
+                arrayShuffled = IsShuffled(sourceArray, source.ToArray());
+
+                if (!arrayShuffled)
+                {
+                    sourceArray = null;
+                }
+
+            }while(!arrayShuffled);
+
+            return sourceArray;
+        }
+
+        private bool IsShuffled(object[] sourceArray, object[] shuffledArray)
+        {
+
+            var comparer = EqualityComparer<object>.Default;
+            for (var i = 0; i < sourceArray.Length; i++)
+            {
+                if (!comparer.Equals(sourceArray[i], shuffledArray[i]))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -172,7 +213,8 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public int[] Sort(int[] source) {
+        public int[] Sort(int[] source)
+        {
             throw new NotImplementedException();
         }
 
@@ -186,7 +228,8 @@ namespace strat7.rbods {
         /// not exceed four million, find the sum of the even-valued terms.
         /// </summary>
         /// <returns></returns>
-        public int FibonacciSum() {
+        public int FibonacciSum()
+        {
             throw new NotImplementedException();
         }
 
@@ -196,22 +239,28 @@ namespace strat7.rbods {
         /// This method is currently broken, fix it so that the tests pass.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<int> GenerateList() {
+        public IEnumerable<int> GenerateList()
+        {
             var ret = new List<int>();
             var numThreads = 2;
 
             Thread[] threads = new Thread[numThreads];
-            for (var i = 0; i < numThreads; i++) {
-                threads[i] = new Thread(() => {
+            for (var i = 0; i < numThreads; i++)
+            {
+                threads[i] = new Thread(() =>
+                {
                     var complete = false;
-                    while (!complete) {
+                    while (!complete)
+                    {
                         var next = ret.Count + 1;
                         Thread.Sleep(new Random().Next(1, 10));
-                        if (next <= 100) {
+                        if (next <= 100)
+                        {
                             ret.Add(next);
                         }
 
-                        if (ret.Count >= 100) {
+                        if (ret.Count >= 100)
+                        {
                             complete = true;
                         }
                     }
@@ -219,7 +268,8 @@ namespace strat7.rbods {
                 threads[i].Start();
             }
 
-            for (var i = 0; i < numThreads; i++) {
+            for (var i = 0; i < numThreads; i++)
+            {
                 threads[i].Join();
             }
 
