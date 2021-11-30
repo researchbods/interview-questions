@@ -139,9 +139,9 @@ namespace strat7.rbods.test
         }
 
         [Test]
-        [Ignore("NotImplemented")]
         public void CanSort() {
-            throw new NotImplementedException();
+            Assert.AreEqual(new List<int>(){3, 5, 6, 7}, instance.Sort(new int[] { 5, 6, 7, 3 }));
+            Assert.AreEqual(new List<int>(){2, 3, 5, 6, 9, 29, 80, 89}, instance.Sort(new int[] { 89, 2, 80, 6, 9, 29, 3, 5 }));
         }
 
         [Test]

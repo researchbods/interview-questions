@@ -215,7 +215,19 @@ namespace strat7.rbods
         /// <returns></returns>
         public int[] Sort(int[] source)
         {
-            throw new NotImplementedException();
+            for (var i = 0; i < source.Length; i++)
+            {
+                for (var j = i + 1; j < source.Length; j++)
+                {
+                    if (source[i] <= source[j]) continue;
+
+                    var tempValue = source[i];
+                    source[i] = source[j];
+                    source[j] = tempValue;
+                }
+            }
+
+            return source;
         }
 
         /// <summary>
