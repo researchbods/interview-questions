@@ -135,8 +135,12 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="word">The word to check</param>
         /// <returns></returns>
-        public bool IsPalindrome(string word) {
-            throw new NotImplementedException();
+        public bool IsPalindrome(string word)
+        {
+            var lettersArray = word.ToCharArray();
+            Array.Reverse(lettersArray);
+            var reverseWord = new string(lettersArray);
+            return word.Equals(reverseWord, StringComparison.InvariantCultureIgnoreCase);
         }
 
         /// <summary>

@@ -116,13 +116,12 @@ namespace strat7.rbods.test
         }
 
         [Test]
-        [Ignore("NotImplemented")]
         public void IsPalindrome() {
             var palindromes = new List<string> {
-
+                "Anna", "Eye", "Kayak"
             };
             var invalid = new List<string> {
-
+                "London", "bolton", "bury"
             };
 
             foreach (var word in palindromes) {
