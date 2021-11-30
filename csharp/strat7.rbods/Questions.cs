@@ -260,39 +260,14 @@ namespace strat7.rbods
         /// <returns></returns>
         public IEnumerable<int> GenerateList()
         {
-            var ret = new List<int>();
-            var numThreads = 2;
+            var listNumbers = new List<int>();
 
-            Thread[] threads = new Thread[numThreads];
-            for (var i = 0; i < numThreads; i++)
+            for (var i = 1; i <= 100; i++)
             {
-                threads[i] = new Thread(() =>
-                {
-                    var complete = false;
-                    while (!complete)
-                    {
-                        var next = ret.Count + 1;
-                        Thread.Sleep(new Random().Next(1, 10));
-                        if (next <= 100)
-                        {
-                            ret.Add(next);
-                        }
-
-                        if (ret.Count >= 100)
-                        {
-                            complete = true;
-                        }
-                    }
-                });
-                threads[i].Start();
+                listNumbers.Add(i);
             }
 
-            for (var i = 0; i < numThreads; i++)
-            {
-                threads[i].Join();
-            }
-
-            return ret;
+            return listNumbers;
         }
     }
 }

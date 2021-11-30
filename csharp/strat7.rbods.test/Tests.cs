@@ -150,7 +150,6 @@ namespace strat7.rbods.test
         }
 
         [Test]
-        [Ignore("NotImplemented")]
         public void CanGenerateListOfNumbers() {
             var list = instance.GenerateList();
 
