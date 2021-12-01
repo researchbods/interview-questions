@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using NUnit.Framework;
@@ -85,10 +86,10 @@ namespace strat7.rbods.test
         [Test]
         public void IsPalindrome() {
             var palindromes = new List<string> {
-
+                "anna", "kayak", "racecar"
             };
             var invalid = new List<string> {
-
+                "bolton", "leeds", "manchester"
             };
 
             foreach (var word in palindromes) {
@@ -102,12 +103,24 @@ namespace strat7.rbods.test
 
         [Test]
         public void CanShuffle() {
-            Assert.AreEqual(new List<string> { "two", "one" }, instance.Shuffle(new List<string> { "one", "two" }));
+
+            // This test isn't correct as shuffle brings back a random order that could be any order whereas the test is expecting a reverse order.
+            // Assert.AreEqual(new List<string> { "two", "one" }, instance.Shuffle(new List<string> { "one", "two" }));
+
+            // Arrange
+            var list = new List<string> { "one", "two" };
+
+            // Act
+            var shuffled = instance.Shuffle(list);
+
+            // Assert
+            Assert.AreEqual(list.Distinct().Count(), shuffled.Distinct().Count());
+
         }
 
         [Test]
         public void CanSort() {
-            throw new NotImplementedException();
+            Assert.AreEqual(new int[] { 1, 2, 3, 4, 5 }, instance.Sort(new int[] { 3, 2, 4, 1, 5 }));
         }
 
         [Test]
