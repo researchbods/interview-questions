@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -22,7 +22,28 @@ namespace strat7.rbods {
         /// <param name="source">An enumerable containing words</param>
         /// <returns></returns>
         public IEnumerable<int> ExtractNumbers(IEnumerable<string> source) {
-            throw new NotImplementedException();
+
+            // results list.
+            var results = new List<int>();
+
+            foreach (var e in source)
+            {
+                // try parse string.
+                int.TryParse(e, out int result);
+
+                // test if string is zero as int.TryParse returns zero for a num-numeric string value,
+                if (e == "0" || result != 0)
+                {
+                    results.Add(result);
+                }
+                else
+                {
+                    // Log.Error($"Invalid number string - {e}");
+                }
+            }
+
+            return results;
+
         }
 
         /// <summary>
@@ -67,7 +88,31 @@ namespace strat7.rbods {
         /// <param name="second">Second list of words</param>
         /// <returns></returns>
         public string LongestCommonWord(IEnumerable<string> first, IEnumerable<string> second) {
-            throw new NotImplementedException();
+
+            var result = "";
+
+            // iterate first list.
+            foreach (var e in first)
+            {
+                if (e.Length > result.Length)
+                {
+                    result = e;
+                }
+            }
+
+            // iterate second list.
+            foreach (var e in second)
+            {
+                if (e.Length > result.Length)
+                {
+                    result = e;
+                }
+            }
+
+            // alternate use LINQ: Aggregate or OrderByDescending string length.
+
+            return result;
+
         }
 
         /// <summary>
@@ -83,7 +128,13 @@ namespace strat7.rbods {
         /// <param name="km">distance in kilometers</param>
         /// <returns></returns>
         public double DistanceInMiles(double km) {
-            throw new NotImplementedException();
+
+            // convert to miles.
+            var ratio = 1.6D;
+            var miles = km / ratio;
+
+            return miles;
+
         }
 
         /// <summary>
@@ -99,7 +150,13 @@ namespace strat7.rbods {
         /// <param name="miles">distance in miles</param>
         /// <returns></returns>
         public double DistanceInKm(double miles) {
-            throw new NotImplementedException();
+
+            // convert to km.
+            var ratio = 1.6D;
+            var km = miles * ratio;
+
+            return km;
+
         }
 
         /// <summary>
@@ -121,7 +178,15 @@ namespace strat7.rbods {
         /// <param name="word">The word to check</param>
         /// <returns></returns>
         public bool IsPalindrome(string word) {
-            throw new NotImplementedException();
+
+            var array = word.ToCharArray();
+            
+            // reverse the word array.
+            Array.Reverse(array);
+            var reversed = new string(array);
+
+            return word == reversed;
+
         }
 
         /// <summary>
@@ -141,8 +206,24 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public IEnumerable<object> Shuffle(IEnumerable<object> source) {
-            throw new NotImplementedException();
+        public IEnumerable<T> Shuffle<T>(IEnumerable<T> source) {
+
+            var random = new Random();
+            var results = new List<T>(source);
+            
+            // shuffle the results in random order.
+            var count = results.Count;
+            while (count > 1)
+            {
+                count--;
+                var index = random.Next(count + 1);
+                var value = results[index];
+                results[index] = results[count];
+                results[count] = value;
+            }
+
+            return results;
+
         }
 
         /// <summary>
@@ -154,7 +235,14 @@ namespace strat7.rbods {
         /// <param name="source"></param>
         /// <returns></returns>
         public int[] Sort(int[] source) {
-            throw new NotImplementedException();
+
+            var results = source;
+
+            // sort the array.
+            Array.Sort(results);
+
+            return results;
+
         }
 
         /// <summary>
@@ -168,7 +256,37 @@ namespace strat7.rbods {
         /// </summary>
         /// <returns></returns>
         public int FibonacciSum() {
-            throw new NotImplementedException();
+
+            var lower = 1;
+            var upper = 2;
+
+            // we have an initial even number of two.
+            var result = 2;
+
+            // limit reached flag.
+            var limit = false;
+            while (!limit)
+            {
+                var value = lower + upper;
+                lower = upper;
+                upper = value;
+
+                if (value > 4000000)
+                {
+                    limit = true;
+                }
+                else
+                {
+                    // modulate even values.
+                    if (value % 2 == 0)
+                    {
+                        result += value;
+                    }
+                }
+            }
+
+            return result;
+
         }
 
         /// <summary>
@@ -177,34 +295,46 @@ namespace strat7.rbods {
         /// This method is currently broken, fix it so that the tests pass.
         /// </summary>
         /// <returns></returns>
+        /// 
         public IEnumerable<int> GenerateList() {
+
             var ret = new List<int>();
             var numThreads = 2;
 
             Thread[] threads = new Thread[numThreads];
-            for (var i = 0; i < numThreads; i++) {
+            for (var i = 0; i < numThreads; i++)
+            {
                 threads[i] = new Thread(() => {
-                    var complete = false;
-                    while (!complete) {
-                        var next = ret.Count + 1;
-                        Thread.Sleep(new Random().Next(1, 10));
-                        if (next <= 100) {
-                            ret.Add(next);
-                        }
 
-                        if (ret.Count >= 100) {
-                            complete = true;
+                    var complete = false;
+                    while (!complete)
+                    {
+                        lock (ret)
+                        {
+                            var next = ret.Count + 1;
+                            if (next <= 100)
+                            {
+                                ret.Add(next);
+                                Thread.Sleep(new Random().Next(1, 10));
+                            }
+                            if (ret.Count >= 100)
+                            {
+                                complete = true;
+                            }
                         }
                     }
+
                 });
                 threads[i].Start();
             }
 
-            for (var i = 0; i < numThreads; i++) {
+            for (var i = 0; i < numThreads; i++)
+            {
                 threads[i].Join();
             }
 
             return ret;
+
         }
     }
 }
