@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
-namespace strat7.rbods {
-    public class Questions {
+namespace strat7.rbods
+{
+    public class Questions
+    {
         /// <summary>
         /// Given an enumerable of strings, attempt to parse each string and if
         /// it is an integer, add it to the returned enumerable.
@@ -21,8 +25,19 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="source">An enumerable containing words</param>
         /// <returns></returns>
-        public IEnumerable<int> ExtractNumbers(IEnumerable<string> source) {
-            throw new NotImplementedException();
+        public IEnumerable<int> ExtractNumbers(IEnumerable<string> source)
+        {
+            List<int> parsedNumbers = new List<int>();
+
+            foreach (string s in source)
+            {
+                if (int.TryParse(s, out int number))
+                {
+                    parsedNumbers.Add(number);
+                }
+            }
+
+            return parsedNumbers;
         }
 
         /// <summary>
@@ -66,8 +81,9 @@ namespace strat7.rbods {
         /// <param name="first">First list of words</param>
         /// <param name="second">Second list of words</param>
         /// <returns></returns>
-        public string LongestCommonWord(IEnumerable<string> first, IEnumerable<string> second) {
-            throw new NotImplementedException();
+        public string LongestCommonWord(IEnumerable<string> first, IEnumerable<string> second)
+        {
+            return first.Intersect(second).OrderByDescending(s => s.Length).FirstOrDefault();
         }
 
         /// <summary>
@@ -82,8 +98,9 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="km">distance in kilometers</param>
         /// <returns></returns>
-        public double DistanceInMiles(double km) {
-            throw new NotImplementedException();
+        public double DistanceInMiles(double km)
+        {
+            return km / 1.6;
         }
 
         /// <summary>
@@ -98,8 +115,9 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="miles">distance in miles</param>
         /// <returns></returns>
-        public double DistanceInKm(double miles) {
-            throw new NotImplementedException();
+        public double DistanceInKm(double miles)
+        {
+            return miles * 1.6;
         }
 
         /// <summary>
@@ -120,8 +138,18 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="word">The word to check</param>
         /// <returns></returns>
-        public bool IsPalindrome(string word) {
-            throw new NotImplementedException();
+        public bool IsPalindrome(string word)
+        {
+            word = word.ToLower();
+            for (int i = 0; i < word.Length / 2; i++)
+            {
+                if (word[i] != word[word.Length - 1 - i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -141,8 +169,20 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public IEnumerable<object> Shuffle(IEnumerable<object> source) {
-            throw new NotImplementedException();
+        public IEnumerable<object> Shuffle(IEnumerable<object> source)
+        {
+            List<object> objects = source.ToList();
+            Random rnd = new Random();
+
+            for (int i = 0; i < objects.Count(); i++)
+            {
+                int random = rnd.Next(1, objects.Count());
+                object temp = objects[i];
+                objects[i] = objects[random];
+                objects[random] = temp;
+            }
+
+            return objects;
         }
 
         /// <summary>
@@ -153,8 +193,35 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public int[] Sort(int[] source) {
-            throw new NotImplementedException();
+        public int[] Sort(int[] source) 
+        {
+            //Plz note, because the method returns an int array, I understood this to mean the sorting should not be 
+            //done in place i.e. the passed in array should not be modified. Thus creating a copy of the source array.
+            //There are many algorithms out there for sorting such as quick sort and merge sort which are much faster
+            //and more complicated than what I have used here. Since the question did not ask for the most efficient 
+            //algorithm, I have gone with the below algorithm for its simplicty.
+            int[] sorted = new int[source.Length];
+            Array.Copy(source, sorted, source.Length);
+            bool stopLoop = false;
+            int i, temp;
+
+            while (!stopLoop)
+            {
+                stopLoop = true;
+
+                for (i = 0; i < sorted.Length - 1; i++)
+                {
+                    if (sorted[i] > sorted[i + 1])
+                    {
+                        temp = sorted[i];
+                        sorted[i] = sorted[i + 1];
+                        sorted[i + 1] = temp;
+                        stopLoop = false;
+                    }
+                }
+            }
+
+            return sorted;
         }
 
         /// <summary>
@@ -167,8 +234,27 @@ namespace strat7.rbods {
         /// not exceed four million, find the sum of the even-valued terms.
         /// </summary>
         /// <returns></returns>
-        public int FibonacciSum() {
-            throw new NotImplementedException();
+        public int FibonacciSum()
+        {
+            int sum = 0, prev = 0, current = 1, next;
+
+            while (true)
+            {
+                next = prev + current;
+                prev = current;
+                current = next;
+
+                if (next >= 4_000_000)
+                {
+                    break;
+                }
+                else if (next % 2 == 0)
+                {
+                    sum += next;
+                }
+            }
+
+            return sum;
         }
 
         /// <summary>
@@ -177,22 +263,29 @@ namespace strat7.rbods {
         /// This method is currently broken, fix it so that the tests pass.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<int> GenerateList() {
-            var ret = new List<int>();
+        public IEnumerable<int> GenerateList()
+        {
+            var ret = new ConcurrentDictionary<int, byte>();
             var numThreads = 2;
 
             Thread[] threads = new Thread[numThreads];
-            for (var i = 0; i < numThreads; i++) {
-                threads[i] = new Thread(() => {
+            for (var i = 0; i < numThreads; i++)
+            {
+                threads[i] = new Thread(() =>
+                {
                     var complete = false;
-                    while (!complete) {
+                    while (!complete)
+                    {
                         var next = ret.Count + 1;
                         Thread.Sleep(new Random().Next(1, 10));
-                        if (next <= 100) {
-                            ret.Add(next);
+
+                        if (next <= 100)
+                        {
+                            ret[next] = 0;
                         }
 
-                        if (ret.Count >= 100) {
+                        if (ret.Count >= 100)
+                        {
                             complete = true;
                         }
                     }
@@ -200,11 +293,12 @@ namespace strat7.rbods {
                 threads[i].Start();
             }
 
-            for (var i = 0; i < numThreads; i++) {
+            for (var i = 0; i < numThreads; i++)
+            {
                 threads[i].Join();
             }
 
-            return ret;
+            return ret.Keys;
         }
     }
 }

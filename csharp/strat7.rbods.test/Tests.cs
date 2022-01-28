@@ -7,11 +7,13 @@ using strat7.rbods;
 
 namespace strat7.rbods.test
 {
-    public class Tests {
+    public class Tests
+    {
         Questions instance = new Questions();
 
         [Test]
-        public void CanExtractNumbers() {
+        public void CanExtractNumbers()
+        {
             Assert.AreEqual(new List<int> {
                 123,
                 234
@@ -21,7 +23,7 @@ namespace strat7.rbods.test
                 "234"
             }));
 
-            Assert.AreEqual(new List<int> {}, instance.ExtractNumbers(new List<string> {
+            Assert.AreEqual(new List<int> { }, instance.ExtractNumbers(new List<string> {
                 "hello",
                 "there"
             }));
@@ -39,7 +41,8 @@ namespace strat7.rbods.test
         }
 
         [Test]
-        public void CanGetLongestCommonWord() {
+        public void CanGetLongestCommonWord()
+        {
             Assert.AreEqual("wandering", instance.LongestCommonWord(
                 new List<string> {
                     "love",
@@ -73,54 +76,80 @@ namespace strat7.rbods.test
         }
 
         [Test]
-        public void CanGetDistanceInMiles() {
+        public void CanGetDistanceInMiles()
+        {
             Assert.AreEqual(10.00, instance.DistanceInMiles(16.00));
         }
 
         [Test]
-        public void CanGetDistanceInKilometers() {
+        public void CanGetDistanceInKilometers()
+        {
             Assert.AreEqual(16.00, instance.DistanceInKm(10.00));
         }
 
         [Test]
-        public void IsPalindrome() {
+        public void IsPalindrome()
+        {
             var palindromes = new List<string> {
-
+                "Anna",
+                "civic",
+                "kayak",
+                "level",
+                "madam",
+                "mom",
+                "noon"
             };
             var invalid = new List<string> {
-
+                "Najmuddin",
+                "bolton",
+                ".Net"
             };
 
-            foreach (var word in palindromes) {
+            foreach (var word in palindromes)
+            {
                 Assert.True(instance.IsPalindrome(word));
             }
 
-            foreach (var word in invalid) {
+            foreach (var word in invalid)
+            {
                 Assert.False(instance.IsPalindrome(word));
             }
         }
 
         [Test]
-        public void CanShuffle() {
+        public void CanShuffle()
+        {
             Assert.AreEqual(new List<string> { "two", "one" }, instance.Shuffle(new List<string> { "one", "two" }));
         }
 
         [Test]
-        public void CanSort() {
-            throw new NotImplementedException();
+        public void CanSort()
+        {
+            //Arrange
+            int[] numbers = new int[] { 5, 3, 8, 1, 9 };
+
+            //Act
+            int[] sorted = instance.Sort(numbers);
+            Array.Sort(numbers);
+
+            //Assert
+            Assert.AreEqual(numbers, sorted);
         }
 
         [Test]
-        public void CanSumFibonacciNumbers() {
+        public void CanSumFibonacciNumbers()
+        {
             Assert.AreEqual(4613732, instance.FibonacciSum());
         }
 
         [Test]
-        public void CanGenerateListOfNumbers() {
+        public void CanGenerateListOfNumbers()
+        {
             var list = instance.GenerateList();
 
             var current = 1;
-            foreach (var num in list) {
+            foreach (var num in list)
+            {
                 Assert.AreEqual(current, num);
                 current++;
             }
