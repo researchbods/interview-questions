@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace strat7.rbods {
@@ -21,8 +22,23 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="source">An enumerable containing words</param>
         /// <returns></returns>
-        public IEnumerable<int> ExtractNumbers(IEnumerable<string> source) {
-            throw new NotImplementedException();
+        public IEnumerable<int> ExtractNumbers(IEnumerable<string> source) 
+        {
+            if (source is null)
+            {
+                throw new NullReferenceException("source cannot be null");
+            }
+            
+            var result = new List<int>();
+            foreach (var item in source)
+            {
+                if (int.TryParse(item, out var parsedItem))
+                {
+                    result.Add(parsedItem);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -66,8 +82,27 @@ namespace strat7.rbods {
         /// <param name="first">First list of words</param>
         /// <param name="second">Second list of words</param>
         /// <returns></returns>
-        public string LongestCommonWord(IEnumerable<string> first, IEnumerable<string> second) {
-            throw new NotImplementedException();
+        public string LongestCommonWord(IEnumerable<string> first, IEnumerable<string> second) 
+        {
+            if (first is null)
+            {
+                throw new NullReferenceException("first cannot be null");
+            }
+
+            if (second is null)
+            {
+                throw new NullReferenceException("second cannot be null");
+            }
+
+            var all = new List<string>();
+            all.AddRange(first);
+            all.AddRange(second);
+
+            return all.GroupBy(x => x)
+                    .Where(x => x.Count() > 1)
+                    .OrderByDescending(x => x.Key.Length)
+                    .First()
+                    .Key;
         }
 
         /// <summary>
@@ -82,8 +117,14 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="km">distance in kilometers</param>
         /// <returns></returns>
-        public double DistanceInMiles(double km) {
-            throw new NotImplementedException();
+        public double DistanceInMiles(double km) 
+        {
+            if (km == 0)
+            {
+                return 0;
+            }
+
+            return km / 1.6;
         }
 
         /// <summary>
@@ -99,7 +140,12 @@ namespace strat7.rbods {
         /// <param name="miles">distance in miles</param>
         /// <returns></returns>
         public double DistanceInKm(double miles) {
-            throw new NotImplementedException();
+            if (miles == 0)
+            {
+                return 0;
+            }
+
+            return miles * 1.6;
         }
 
         /// <summary>
@@ -120,8 +166,14 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="word">The word to check</param>
         /// <returns></returns>
-        public bool IsPalindrome(string word) {
-            throw new NotImplementedException();
+        public bool IsPalindrome(string word)
+        {
+            if (word is null)
+            {
+                throw new NullReferenceException("word cannot be null");
+            }
+            
+            return word.ToLower().SequenceEqual(word.ToLower().Reverse());
         }
 
         /// <summary>
@@ -141,8 +193,14 @@ namespace strat7.rbods {
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public IEnumerable<object> Shuffle(IEnumerable<object> source) {
-            throw new NotImplementedException();
+        public IEnumerable<object> Shuffle(IEnumerable<object> source) 
+        {
+            if (source is null)
+            {
+                throw new NullReferenceException("source cannot be null");
+            }
+
+            return source.Reverse();
         }
 
         /// <summary>
@@ -154,7 +212,30 @@ namespace strat7.rbods {
         /// <param name="source"></param>
         /// <returns></returns>
         public int[] Sort(int[] source) {
-            throw new NotImplementedException();
+            if (source is null)
+            {
+                throw new NullReferenceException("source cannot be null");
+            }
+
+            var copyOfSource = source.ToList();
+            var sortedInts = new List<int>();
+
+            while (copyOfSource.Count > 0)
+            {
+                var minimum = copyOfSource[0];
+                var indexToRemove = 0;
+                for (var i = 0; i < copyOfSource.Count; i++)
+                {
+                    if (copyOfSource[i] < minimum)
+                    {
+                        minimum = copyOfSource[i];
+                        indexToRemove = i;
+                    }
+                }
+                copyOfSource.RemoveAt(indexToRemove);
+                sortedInts.Add(minimum);
+            }
+            return sortedInts.ToArray();
         }
 
         /// <summary>
@@ -167,8 +248,26 @@ namespace strat7.rbods {
         /// not exceed four million, find the sum of the even-valued terms.
         /// </summary>
         /// <returns></returns>
-        public int FibonacciSum() {
-            throw new NotImplementedException();
+        public int FibonacciSum()
+        {
+            var startTerm = 1; 
+            var previousTerm = 0;
+            var nextTerm = 0;
+            var total = 0;
+
+            while (nextTerm <= 4000000)
+            {
+                nextTerm = previousTerm + startTerm;
+                previousTerm = startTerm;
+                startTerm = nextTerm;
+
+                if (nextTerm % 2 == 0)
+                {
+                    total += nextTerm;
+                }
+            }
+
+            return total;
         }
 
         /// <summary>
@@ -179,7 +278,7 @@ namespace strat7.rbods {
         /// <returns></returns>
         public IEnumerable<int> GenerateList() {
             var ret = new List<int>();
-            var numThreads = 2;
+            var numThreads = 1;
 
             Thread[] threads = new Thread[numThreads];
             for (var i = 0; i < numThreads; i++) {

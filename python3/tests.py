@@ -49,8 +49,8 @@ class UnitTests(unittest.TestCase):
 		self.assertEqual(questions.distance_in_km(10), 16)
 
 	def test_can_determine_palindromes(self):
-		palindromes = [];
-		invalid = [];
+		palindromes = ["level", "civic"];
+		invalid = ["Hello", "World"];
 
 		for p in palindromes:
 			self.assertEqual(True, questions.isPalindrome(p))
