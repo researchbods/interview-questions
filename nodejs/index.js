@@ -13,7 +13,14 @@
 /// ]
 ///
 const extractNumbers = (source) => {
-	throw new Error("Not implemented");
+	numbers = [];
+	for (let i = 0; i < source.length; i++){
+		const parsedItem = parseFloat(source[i]);
+		if (!isNaN(parsedItem)){
+			numbers.push(parsedItem);
+		}
+	}
+	return numbers;
 };
 
 /// Given two enumerables of strings, find the longest common word.
@@ -53,7 +60,26 @@ const extractNumbers = (source) => {
 ///
 /// ; would return "wandering" as the longest common word.
 const longestCommonWord = (first, second) => {
-	throw new Error("Not implemented");
+	commonWords = [];
+	for (let i = 0; i < first.length; i++){
+		for(let s = 0; s < second.length; s++){
+			if (first[i] == second[s]){
+				commonWords.push(first[i]);
+			}
+		}
+	}
+
+	var length = 0;
+	var longest;
+
+	for (var i = 0; i < commonWords.length; i++) {
+  		if (commonWords[i].length > length) {
+    		var length = commonWords[i].length;
+    		longest = commonWords[i];
+  		}
+	}	
+
+	return longest;
 };
 
 /// Write a method that converts kilometers to miles, given that there are
@@ -65,7 +91,7 @@ const longestCommonWord = (first, second) => {
 ///
 /// ; would return 10;
 const distanceInMiles = (kilometers) => {
-	throw new Error("Not implemented");
+	return kilometers / 1.6;
 };
 
 /// Write a method that converts miles to kilometers, give that there are
@@ -77,7 +103,7 @@ const distanceInMiles = (kilometers) => {
 ///
 /// ; would return 16;
 const distanceInKm = (miles) => {
-	throw new Error("Not implemented");
+	return miles * 1.6;
 };
 
 /// Write a method that returns true if the word is a palindrome, false if
@@ -95,7 +121,7 @@ const distanceInKm = (miles) => {
 ///
 /// Also complete the related test case for this method.
 const isPalindrome = (word) => {
-	throw new Error("Not implemented");
+	return word == word.split('').reverse().join('');
 };
 
 /// Generate a list of integers from 1 to 100.
@@ -110,7 +136,6 @@ const generateList = () => {
 			list.push(i);
 		});
 	};
-	funcs.map((f) => f());
 	return list;
 };
 
