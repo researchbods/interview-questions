@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
+/*
+ * Please note that I have done this C# test before, however the question answers were already done when I did a git clone.
+*/
+
 namespace strat7.rbods {
     public class Questions {
         /// <summary>
